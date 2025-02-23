@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kilimall | login</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.png'%}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    
+<div class="login-container">
+    <div class="login-card">
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="{% static 'img/kilimall-logo.webp' %}" alt="Kilimall">
+            <p>Affordable Online Shopping</p>
+        </div>
+
+        <h2>Login with password</h2>
+
+        <!-- Login Form -->
+        <form method="POST" action="{% url 'login' %}" class="login-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <input type="text"  name="username" id="username" placeholder="Phone No./email" required>
+            </div>
+
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Please input password" required>
+            </div>
+
+            <div class="forgot-password">
+                <a href="#">forgot password</a>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+
+        <!-- Alternative Login Methods -->
+        <div class="alternative-login">
+            <a href="#" class="sms-login">login in with SMS</a>
+
+            <div class="social-login">
+                <button class="google-btn">
+                    <img src="{% static 'img/ic_google_2x.webp' %}" alt="Google">
+                    Login Via Google
+                </button>
+
+                <button class="facebook-btn">
+                    <img src="{% static 'img/ic_facebook_2x.webp' %}" alt="Facebook">
+                    Login Via Facebook
+                </button>
+            </div>
+        </div>
+
+        <!-- Registration Link -->
+        <div class="register-prompt">
+            <span>New to Kilimall? </span>
+            <a href="{% url 'register' %}">Register</a>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="terms">
+            <p>I agree to Kilimall <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

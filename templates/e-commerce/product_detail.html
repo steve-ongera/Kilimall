@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="product-container">
+    <!-- Product Main Section -->
+    <div class="product-main">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>
+            <div class="thumbnail-list">
+
+                {% for image in product.product_images.all %}
+                <div class="thumbnail {% if forloop.first %}active{% endif %}" data-image-url="{{ image.url }}">
+                   <img src="{{ image.image.url }}" alt="{{ product.name }} - Image {{ forloop.counter }}">
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+        
+        <div class="product-info">
+            <div class="product-header">
+                <h1>{{ product.brand.name }}</h1>
+                <div class="rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="review-count">{{ product.total_reviews }} Customer reviews</span>
+                </div>
+            </div>
+
+            <div class="product-price">
+                <span class="current-price"> {{ product.currency }}  {{ product.price|floatformat:0 }}</span>
+
+                {% if product.original_price %}
+                   <span class="original-price">{{ product.currency }} {{ product.original_price|floatformat:0 }}</span>               
+                {% endif %}
+
+                {% if product.discount_percentage %}
+                <span class="discount">(-{{ product.discount_percentage }}%)</span>
+                
+                {% endif %}
+                
+            </div>
+
+            <div class="product-details">
+                <div class="detail-row">
+                    <span class="label">Services:</span>
+                    <span class="value">Fulfilled By Kilimall</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Color:</span>
+                    <span class="value">Black</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Promotions:</span>
+                    <span class="value promotion">KSh 100</span>
+                </div>
+            </div>
+
+            <div class="quantity-selector">
+                <span class="label">Quantity</span>
+                <div class="quantity-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" value="1" min="1">
+                    <button class="quantity-btn">+</button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="buy-now">Buy Now</button>
+                <button class="wishlist"><i class="far fa-heart"></i></button>
+                <button class="share"><i class="fas fa-share"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store Section -->
+    <div class="store-section">
+        <div class="store-header">
+            <div class="store-info">
+                <img src="{{ product.seller.profile_picture.url }}" alt="Store Icon">
+                <div class="store-details">
+                    <h2>{{ product.seller.store_name }}</h2>
+                    <span class="badge">Brand Official</span>
+                </div>
+            </div>
+            <div class="store-stats">
+                <div class="score">
+                    <span>Score</span>
+                    <strong>4.50</strong>
+                </div>
+                <div class="products">
+                    <span>All Products</span>
+                    <strong>11</strong>
+                </div>
+            </div>
+            <div class="store-actions">
+                <button class="visit-store">Visit Store</button>
+                <button class="chat-seller">Chat Seller</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store Products -->
+    <div class="store-products">
+        <h3>Store Selective</h3>
+        <div class="products-grid">
+            {% for product in store_products %}
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h4>{{ product.name }}</h4>
+                <div class="price">KSh {{ product.price }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Product Tabs -->
+    <div class="product-tabs">
+        <div class="tab-buttons">
+            <button class="tab-btn active">Description</button>
+            <button class="tab-btn">Reviews</button>
+            <button class="tab-btn">Recommend</button>
+        </div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="recommendations">
+        <h3>You May Also Like</h3>
+        <div class="recommendations-grid">
+            {% for related in related_products %}
+            <div class="product-card">
+                <a href="{% url 'product_detail' related.slug %}">
+                    <img src="{{ related.image.url }}" alt="{{ related.name }}">
+                  </a>
+                <h4>
+                    {{ related.name|slice:":30" }}{% if related.name|length > 30 %}...{% endif %}
+                </h4>
+                
+                <div class="price">Ksh {{ related.price }}</div>
+                <div class="rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="review-count">({{ related.total_reviews }})</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

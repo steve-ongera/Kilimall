@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="product-container">
+    <!-- Product Main Section -->
+    <div class="product-main">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img src="{% static 'images/products/speaker.jpg' %}" alt="Tagwood Speaker">
+            </div>
+            <div class="thumbnail-list">
+                <img src="{% static 'images/products/speaker-thumb1.jpg' %}" alt="Thumbnail 1">
+                <img src="{% static 'images/products/speaker-thumb2.jpg' %}" alt="Thumbnail 2">
+                <img src="{% static 'images/products/speaker-thumb3.jpg' %}" alt="Thumbnail 3">
+            </div>
+        </div>
+        
+        <div class="product-info">
+            <div class="product-header">
+                <h1>TAGWOOD LS 421H</h1>
+                <div class="rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="review-count">163 Customer reviews</span>
+                </div>
+            </div>
+
+            <div class="product-price">
+                <span class="current-price">KSh 3,059</span>
+                <span class="original-price">KSh5,999</span>
+                <span class="discount">(-49%)</span>
+            </div>
+
+            <div class="product-details">
+                <div class="detail-row">
+                    <span class="label">Services:</span>
+                    <span class="value">Fulfilled By Kilimall</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Color:</span>
+                    <span class="value">Black</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Promotions:</span>
+                    <span class="value promotion">KSh 100</span>
+                </div>
+            </div>
+
+            <div class="quantity-selector">
+                <span class="label">Quantity</span>
+                <div class="quantity-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" value="1" min="1">
+                    <button class="quantity-btn">+</button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="buy-now">Buy Now</button>
+                <button class="wishlist"><i class="far fa-heart"></i></button>
+                <button class="share"><i class="fas fa-share"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store Section -->
+    <div class="store-section">
+        <div class="store-header">
+            <div class="store-info">
+                <img src="{% static 'images/store-icon.jpg' %}" alt="Store Icon">
+                <div class="store-details">
+                    <h2>Tagwood Official store</h2>
+                    <span class="badge">Brand Official</span>
+                </div>
+            </div>
+            <div class="store-stats">
+                <div class="score">
+                    <span>Score</span>
+                    <strong>4.50</strong>
+                </div>
+                <div class="products">
+                    <span>All Products</span>
+                    <strong>11</strong>
+                </div>
+            </div>
+            <div class="store-actions">
+                <button class="visit-store">Visit Store</button>
+                <button class="chat-seller">Chat Seller</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store Products -->
+    <div class="store-products">
+        <h3>Store Selective</h3>
+        <div class="products-grid">
+            {% for product in store_products %}
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h4>{{ product.name }}</h4>
+                <div class="price">KSh {{ product.price }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Product Tabs -->
+    <div class="product-tabs">
+        <div class="tab-buttons">
+            <button class="tab-btn active">Description</button>
+            <button class="tab-btn">Reviews</button>
+            <button class="tab-btn">Recommend</button>
+        </div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="recommendations">
+        <h3>You May Also Like</h3>
+        <div class="recommendations-grid">
+            {% for product in recommended_products %}
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h4>{{ product.name }}</h4>
+                <div class="price">KSh {{ product.price }}</div>
+                <div class="rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="review-count">({{ product.reviews_count }})</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

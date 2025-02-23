@@ -1,0 +1,181 @@
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.login-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Logo Styles */
+.logo-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-container img {
+    height: 50px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.logo-container p {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+/* Form Styles */
+.login-form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #E41E31;
+}
+
+.form-group input::placeholder {
+    color: #999;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.forgot-password a {
+    color: #E41E31;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #E41E31;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #d41b2c;
+}
+
+/* Alternative Login */
+.alternative-login {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.sms-login {
+    display: block;
+    color: #E41E31;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.google-btn, .facebook-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.google-btn:hover, .facebook-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.google-btn img, .facebook-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Registration Prompt */
+.register-prompt {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.register-prompt a {
+    color: #E41E31;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Terms and Conditions */
+.terms {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+}
+
+.terms a {
+    color: #666;
+    text-decoration: none;
+}
+
+.terms a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 20px;
+    }
+    
+    .google-btn, .facebook-btn {
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,76 @@
+{% load static %}
+<nav class="navbar">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <a href="#">Seller Center</a>
+                <a href="#"><i class="fas fa-mobile-alt"></i> Download App</a>
+            </div>
+            <div class="top-bar-right">
+                <a href="#">Help Center</a>
+                <div class="country-selector">
+                    <img src="{% static 'img/kenyalogo.webp' %}" alt="Kenya Flag">
+                    <span>Kenya</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <div class="main-nav">
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="/">
+                    <img src="{% static 'img/kilimall-logo.webp' %}" alt="Kilimall">
+                </a>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <form action="/search" method="GET">
+                    <input type="text" placeholder="I'm looking for..." name="q">
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- User Actions -->
+            <div class="user-actions">
+                <div class="cart">
+                    <a href="/cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                    </a>
+                </div>
+                <div class="account">
+                    <a href="/account">
+                        <i class="fas fa-user"></i>
+                        <span>My Account</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Navigation -->
+    <div class="categories-nav">
+        <div class="container">
+            <ul class="category-list">
+                <li><a href="#">Xiaomi</a></li>
+                <li><a href="#">Wardrobe</a></li>
+                <li><a href="#">earphone</a></li>
+                <li><a href="#">Water Dispenser</a></li>
+                <li><a href="#">refurbished phone</a></li>
+                <li><a href="#">Earphone</a></li>
+                <li><a href="#">Backpacks</a></li>
+                <li><a href="#">phone</a></li>
+                <li><a href="#">Perfume</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="home-container">
+    <!-- Category Sidebar -->
+    <div class="category-sidebar">
+        <ul>
+            <li><i class="fas fa-star"></i> Kili Featured</li>
+            <li><i class="fas fa-tv"></i> TV/Audio/Video</li>
+            <li><i class="fas fa-shoe-prints"></i> Shoes</li>
+            <li><i class="fas fa-mobile-alt"></i> Phones & Accessories</li>
+            <li><i class="fas fa-home"></i> Home & Kitchen</li>
+            <li><i class="fas fa-heart"></i> Health & Beauty</li>
+            <li><i class="fas fa-blender"></i> Appliances</li>
+            <li><i class="fas fa-lightbulb"></i> Light</li>
+            <li><i class="fas fa-tshirt"></i> Clothes</li>
+            <li><i class="far fa-clock"></i> Watches & Jewellery</li>
+            <li><i class="fas fa-laptop"></i> Computers & Accessories</li>
+            <li><i class="fas fa-baby"></i> Kids & Baby Products</li>
+            <li><i class="fas fa-car"></i> Automotive</li>
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div class="banner-content">
+                <div class="banner-text">
+                    <h2>Shoes Outlets Sale</h2>
+                    <p>Feb. 17-Mar. 2</p>
+                    <p class="price">Down to KSh299!</p>
+                </div>
+                <img src="{% static 'images/shoes-banner.jpg' %}" alt="Shoes Sale">
+            </div>
+        </div>
+
+        <!-- Quick Categories -->
+        <div class="quick-categories">
+            <div class="category-card">
+                <h3>SHOES SALES</h3>
+                <p>KSh 1,099</p>
+                <img src="{% static 'images/shoes-card.jpg' %}" alt="Shoes">
+            </div>
+            <div class="category-card">
+                <h3>HOME & LIVING</h3>
+                <p>KSh 2,249</p>
+                <img src="{% static 'images/home-card.jpg' %}" alt="Home">
+            </div>
+            <div class="category-card">
+                <h3>TV & Audio</h3>
+                <p>KSh 4,795</p>
+                <img src="{% static 'images/tv-card.jpg' %}" alt="TV">
+            </div>
+            <div class="category-card">
+                <h3>LAPTOPS SALES</h3>
+                <p>KSh 16,499</p>
+                <img src="{% static 'images/laptop-card.jpg' %}" alt="Laptop">
+            </div>
+        </div>
+
+        <!-- Flash Sale Section -->
+        <div class="section-header">
+            <div class="title">
+                <i class="fas fa-bolt"></i> Flash Sale
+                <span class="timer">Ends in 21 22 45</span>
+            </div>
+            <a href="#" class="view-more">View more</a>
+        </div>
+        <div class="product-grid">
+            <!-- Flash Sale Products -->
+            {% for product in flash_sale_products %}
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <div class="product-info">
+                    <h4>{{ product.name }}</h4>
+                    <p class="price">KSh {{ product.price }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Hot Category Section -->
+        <h2 class="section-title">Hot Category</h2>
+        <div class="hot-categories">
+            <div class="category-grid">
+                <!-- Top Row -->
+                <div class="category-item">
+                    <img src="{% static 'images/category/tvs.jpg' %}" alt="TVs">
+                    <span>TVs</span>
+                </div>
+                <!-- Add more category items -->
+            </div>
+        </div>
+
+        <!-- What's New Section -->
+        <div class="section-header">
+            <h2>What's New</h2>
+            <a href="#" class="view-more">View More</a>
+        </div>
+        <div class="product-grid">
+            <!-- New Products -->
+            {% for product in new_products %}
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <div class="product-info">
+                    <h4>{{ product.name }}</h4>
+                    <p class="price">KSh {{ product.price }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- You May Also Like Section -->
+        <div class="section-header">
+            <h2>You May Also Like</h2>
+        </div>
+        <div class="product-grid">
+            <!-- Recommended Products -->
+            {% for product in recommended_products %}
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <div class="product-info">
+                    <h4>{{ product.name }}</h4>
+                    <p class="price">KSh {{ product.price }}</p>
+                    <div class="rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="reviews">({{ product.review_count }})</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button class="show-more">SHOW MORE</button>
+    </div>
+</div>
+{% endblock %}
