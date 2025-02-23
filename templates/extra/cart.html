@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="cart-container">
+    <div class="cart-items">
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <div class="item-select">
+                <input type="checkbox" name="selected_items" value="{{ item.id }}">
+            </div>
+            <div class="store-info">
+                <i class="fas fa-store"></i>
+                <span>{{ item.product.store_name }}</span>
+            </div>
+            <div class="item-details">
+                <div class="item-image">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                </div>
+                <div class="item-info">
+                    <h3 class="item-name">{{ item.product.name }}</h3>
+                    {% if item.variant %}
+                    <p class="item-variant">{{ item.variant }}</p>
+                    {% endif %}
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" data-id="{{ item.id }}">−</button>
+                        <input type="number" value="{{ item.quantity }}" min="1" class="quantity-input" 
+                               data-id="{{ item.id }}">
+                        <button class="quantity-btn plus" data-id="{{ item.id }}">+</button>
+                    </div>
+                </div>
+                <div class="item-price">
+                    <span class="price">KSh {{ item.product.price }}</span>
+                    <button class="delete-btn" data-id="{{ item.id }}">Delete</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+        <div class="guarantee-box">
+            <div class="guarantee-icon">7</div>
+            <div class="guarantee-text">
+                <h4>7 DAYS</h4>
+                <p>Money Back Guarantee</p>
+            </div>
+        </div>
+
+        <div class="cart-totals">
+            <div class="total-row">
+                <span>Total</span>
+                <span class="total-amount">KSh {{ total_amount }}</span>
+            </div>
+        </div>
+
+        <div class="cart-actions">
+            <a href="{% url 'shop' %}" class="continue-shopping">Continue Shopping</a>
+            <button class="checkout-btn">Proceed to Check out</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Quantity controls
+    const quantityBtns = document.querySelectorAll('.quantity-btn');
+    quantityBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const input = this.parentElement.querySelector('.quantity-input');
+            const currentValue = parseInt(input.value);
+            if (this.classList.contains('minus') && currentValue > 1) {
+                input.value = currentValue - 1;
+            } else if (this.classList.contains('plus')) {
+                input.value = currentValue + 1;
+            }
+            updateCart(this.dataset.id, input.value);
+        });
+    });
+
+    // Delete item
+    const deleteBtns = document.querySelectorAll('.delete-btn');
+    deleteBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to remove this item?')) {
+                removeFromCart(this.dataset.id);
+            }
+        });
+    });
+
+    function updateCart(itemId, quantity) {
+        fetch(`/cart/update/${itemId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({ quantity: quantity })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+
+    function removeFromCart(itemId) {
+        fetch(`/cart/remove/${itemId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+{% endblock %}

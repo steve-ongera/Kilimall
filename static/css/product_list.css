@@ -3,6 +3,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
 /* Breadcrumb */
@@ -27,6 +28,7 @@
 .product-list-main {
     display: flex;
     gap: 20px;
+    
 }
 
 /* Filter Sidebar */

@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="product-list-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="{% url 'home' %}">Home</a>
+        <span>›</span>
+        <a href="#">Phones & Accessories</a>
+        <span>›</span>
+        <a href="#">Popular Brands</a>
+        <span>›</span>
+        <span>iPhone</span>
+    </div>
+
+    <div class="product-list-main">
+        <!-- Filter Sidebar -->
+        <div class="filter-sidebar">
+            <div class="filter-header">
+                <i class="fas fa-filter"></i>
+                <span>Search filter</span>
+            </div>
+
+            <div class="filter-section">
+                <h3>Price</h3>
+                <div class="price-range">
+                    <input type="number" placeholder="20000" min="0">
+                    <span>-</span>
+                    <input type="number" placeholder="30000" min="0">
+                    <button class="apply-btn">Apply</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Category</h3>
+                <ul>
+                    <li><a href="#">Smart Phones</a></li>
+                    <li><a href="#">Refurbished Phones</a></li>
+                </ul>
+            </div>
+
+            <div class="filter-section">
+                <h3>Shipped From</h3>
+                <ul>
+                    <li><a href="#">Fulfilled By Kilimall</a></li>
+                    <li><a href="#">Overseas Shipment</a></li>
+                    <li><a href="#">Local Dispatch</a></li>
+                </ul>
+            </div>
+
+            <div class="filter-section">
+                <h3>Brand</h3>
+                <ul>
+                    <li><a href="#">Apple</a></li>
+                    <li><a href="#">Samsung</a></li>
+                    <li><a href="#">iBRIT</a></li>
+                </ul>
+            </div>
+
+            <div class="filter-section">
+                <h3>Color</h3>
+                <ul>
+                    <li><a href="#">black</a></li>
+                    <li><a href="#">gold</a></li>
+                    <li><a href="#">blue</a></li>
+                    <li><a href="#">silver</a></li>
+                </ul>
+                <button class="view-more">View More</button>
+            </div>
+
+            <div class="filter-section">
+                <h3>Screen Material</h3>
+                <ul>
+                    <li><a href="#">oled</a></li>
+                    <li><a href="#">lcd</a></li>
+                    <li><a href="#">flexible oled</a></li>
+                    <li><a href="#">amoled</a></li>
+                </ul>
+                <button class="view-more">View More</button>
+            </div>
+
+            <div class="filter-section">
+                <h3>Storage</h3>
+                <ul>
+                    <li><a href="#">256gb</a></li>
+                    <li><a href="#">128gb</a></li>
+                    <li><a href="#">64gb</a></li>
+                    <li><a href="#">512gb</a></li>
+                </ul>
+                <button class="view-more">View More</button>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid-section">
+            <div class="product-grid-header">
+                <div class="results-count">
+                    {{ page_obj.paginator.count }} product found.
+                </div>
+                <div class="sort-dropdown">
+                    <select>
+                        <option>Popular</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Newest</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                {% for product in page_obj %}
+                <div class="product-card">
+                    <a href="{% url 'product_detail' product.slug %}">
+                        <div class="product-image">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% if product.tag %}
+                            <span class="product-tag">{{ product.tag }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">{{ product.name }}</h3>
+                            <div class="product-price">KSh {{ product.price }}</div>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    {% for i in "12345" %}
+                                    <span class="star">★</span>
+                                    {% endfor %}
+                                </div>
+                                <span class="rating-count">({{ product.total_reviews }})</span>
+                            </div>
+                            <div class="shipping-info">{{ product.shipping_type }}</div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% comment %}
+
+            <div class="pagination">
+                {% if products.has_previous %}
+                <a href="?page={{ products.previous_page_number }}" class="prev-page">Previous</a>
+                {% endif %}
+                
+                <span class="current-page">{{ products.number }}</span>
+                
+                {% if products.has_next %}
+                <a href="?page={{ products.next_page_number }}" class="next-page">Next</a>
+                {% endif %}
+            </div>
+
+            {% endcomment %}
+
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="prev-page">&laquo; Previous</a>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                        <span class="current-page">{{ num }}</span>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="next-page">Next &raquo;</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
