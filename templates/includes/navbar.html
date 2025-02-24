@@ -130,15 +130,22 @@
     <div class="categories-nav">
         <div class="container">
             <ul class="category-list">
-                <li><a href="#">Xiaomi</a></li>
-                <li><a href="#">Wardrobe</a></li>
-                <li><a href="#">earphone</a></li>
-                <li><a href="#">Water Dispenser</a></li>
-                <li><a href="#">refurbished phone</a></li>
-                <li><a href="#">Earphone</a></li>
-                <li><a href="#">Backpacks</a></li>
-                <li><a href="#">phone</a></li>
-                <li><a href="#">Perfume</a></li>
+                
+                {% for category in categories %}
+                  <li>
+                    {% if category.slug %}
+                      <a href="{% url 'category' slug=category.slug %}">
+                      
+                        {{ category.name }}
+                      </a>
+                    {% else %}
+                      <!-- Optional fallback message -->
+                      <span>{{ category.name }} (No valid slug)</span>
+                    {% endif %}
+                  </li>
+              {% empty %}
+                   <li><a href="#">No categories available</a></li>
+             {% endfor %}
             </ul>
         </div>
     </div>

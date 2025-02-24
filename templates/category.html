@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ category_name }} Category - Kilimall{% endblock %}
+
+{% block content %}
+<div class="category-container">
+    <!-- Filter Sidebar -->
+    <aside class="filter-sidebar">
+        <div class="filter-header">
+            <i class="fas fa-filter"></i>
+            <h2>Search Filter</h2>
+        </div>
+
+        <div class="filter-section price-filter">
+            <h3>Price Range</h3>
+            <div class="price-inputs">
+                <input type="number" placeholder="Min Price" min="0" class="price-min">
+                <span class="price-separator">-</span>
+                <input type="number" placeholder="Max Price" min="0" class="price-max">
+                <button class="btn-apply">Apply</button>
+            </div>
+        </div>
+
+        {% for filter in filters %}
+        <div class="filter-section">
+            <h3>{{ filter.title }}</h3>
+            <ul class="filter-list">
+                {% for option in filter.options %}
+                <li>
+                    <label class="filter-option">
+                        <input type="checkbox" name="{{ filter.name }}" value="{{ option.value }}">
+                        <span>{{ option.label }}</span>
+                        <span class="count">({{ option.count }})</span>
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+            {% if filter.options|length > 4 %}
+            <button class="btn-view-more">View More</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </aside>
+
+    <main class="main-content">
+        <header class="category-header">
+            <div class="category-title">
+                <h1>{{ category.name }}</h1>
+                <span class="product-count">({{ products.paginator.count }} products)</span>
+            </div>
+            
+            <div class="sort-controls">
+                <label for="sort-select">Sort by:</label>
+                <select id="sort-select" class="sort-select">
+                    <option value="popularity">Popularity</option>
+                    <option value="price_asc">Price: Low to High</option>
+                    <option value="price_desc">Price: High to Low</option>
+                    <option value="newest">Newest Arrivals</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="active-filters">
+            {% for tag in related_tags %}
+            <a href="{% url 'search' %}?q={{ tag }}" class="filter-tag">{{ tag }}</a>
+            {% endfor %}
+        </div>
+
+        <section class="product-grid">
+            {% for product in products %}
+            <article class="product-card">
+                <div class="product-image">
+                    {% if product.warranty %}
+                    <span class="badge warranty-badge">{{ product.warranty }} WARRANTY</span>
+                    {% endif %}
+                    
+                    <a href="{% url 'product_detail' product.slug %}" class="product-link">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                    </a>
+                    
+                    <button class="wishlist-btn" aria-label="Add to wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    
+                    {% if product.official_store %}
+                    <span class="badge store-badge">Official Store</span>
+                    {% endif %}
+                </div>
+
+                <div class="product-info">
+                    <h3 class="product-name">
+                        <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+                    </h3>
+                    
+                    <div class="product-price">
+                        <span class="current-price">KSh {{ product.price|floatformat:0 }}</span>
+                        {% if product.original_price %}
+                        <div class="price-details">
+                            <span class="original-price">KSh {{ product.original_price|floatformat:0 }}</span>
+                            <span class="discount">-{{ product.discount_percentage }}%</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="product-rating">
+                        <div class="stars" aria-label="Rating: {{ product.rating }} out of 5">
+                            {% for i in '12345'|make_list %}
+                            <span class="star {% if forloop.counter <= product.rating %}filled{% endif %}">★</span>
+                            {% endfor %}
+                        </div>
+                        <span class="review-count">({{ product.total_reviews }})</span>
+                    </div>
+
+                    {% if product.express_delivery %}
+                    <div class="delivery-info">
+                        <img src="{% static 'images/express-badge.png' %}" alt="Express Delivery Available">
+                    </div>
+                    {% endif %}
+                </div>
+            </article>
+            {% empty %}
+            <div class="no-results">
+                <p>No products found in this category.</p>
+            </div>
+            {% endfor %}
+        </section>
+
+        {% if products.has_other_pages %}
+        <nav class="pagination" aria-label="Page navigation">
+            {% if products.has_previous %}
+            <a href="?page={{ products.previous_page_number }}" class="page-link" aria-label="Previous page">&laquo;</a>
+            {% endif %}
+            
+            {% for num in products.paginator.page_range %}
+                {% if products.number == num %}
+                <span class="page-link active" aria-current="page">{{ num }}</span>
+                {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            
+            {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}" class="page-link" aria-label="Next page">&raquo;</a>
+            {% endif %}
+        </nav>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}

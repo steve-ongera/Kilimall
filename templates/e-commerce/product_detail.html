@@ -7,18 +7,18 @@
     <div class="product-main">
         <div class="product-gallery">
             <div class="main-image">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" id="main-product-image">
             </div>
             <div class="thumbnail-list">
-
                 {% for image in product.product_images.all %}
-                <div class="thumbnail {% if forloop.first %}active{% endif %}" data-image-url="{{ image.url }}">
+                <div class="thumbnail {% if forloop.first %}active{% endif %}" data-image-url="{{ image.image.url }}">
                    <img src="{{ image.image.url }}" alt="{{ product.name }} - Image {{ forloop.counter }}">
                 </div>
                 {% endfor %}
-                
             </div>
         </div>
+
+
         
         <div class="product-info">
             <div class="product-header">
@@ -168,7 +168,8 @@
     thumbnails.forEach(thumbnail => {
       thumbnail.addEventListener('click', function() {
         // Update main image
-        mainImage.src = this.getAttribute('data-image-url');
+        const imageUrl = this.getAttribute('data-image-url');
+        mainImage.src = imageUrl;
         
         // Update active state
         thumbnails.forEach(t => t.classList.remove('active'));
