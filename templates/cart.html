@@ -69,57 +69,79 @@
     document.addEventListener('DOMContentLoaded', function() {
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     
-        // Handle quantity changes
-        document.querySelectorAll('.item-quantity').forEach(container => {
-            const decreaseBtn = container.querySelector('.decrease-qty');
-            const increaseBtn = container.querySelector('.increase-qty');
+        // Handle quantity controls
+        document.querySelectorAll('.quantity-controls').forEach(container => {
+            const minusBtn = container.querySelector('.minus');
+            const plusBtn = container.querySelector('.plus');
             const input = container.querySelector('.quantity-input');
-            const itemId = container.dataset.itemId;
-    
-            decreaseBtn.addEventListener('click', () => updateQuantity(itemId, 'decrease'));
-            increaseBtn.addEventListener('click', () => updateQuantity(itemId, 'increase'));
+            const itemId = input.getAttribute('data-id');
+
+            minusBtn.addEventListener('click', () => {
+                if (parseInt(input.value) > 1) {
+                    updateQuantity(itemId, 'decrease');
+                }
+            });
+
+            plusBtn.addEventListener('click', () => {
+                updateQuantity(itemId, 'increase');
+            });
+
+            // Handle manual input changes
+            input.addEventListener('change', () => {
+                const newValue = parseInt(input.value);
+                if (newValue >= 1) {
+                    updateQuantity(itemId, 'set', newValue);
+                } else {
+                    input.value = 1;
+                }
+            });
         });
-    
-        // Handle remove buttons
+
+        // Keep your existing removeItem function as is
         document.querySelectorAll('.remove-item-form').forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const itemId = this.closest('.cart-item').dataset.itemId; // Ensure correct ID
+                const itemId = this.closest('.cart-item').dataset.itemId;
                 removeItem(itemId);
             });
         });
-      
-  
-        // update quantity
-    
-        function updateQuantity(itemId, action) {
-              fetch('{% url "update_cart_item" %}', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded',
-                      'X-CSRFToken': csrfToken
-                  },
-                  body: `item_id=${itemId}&action=${action}`
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.status === 'success') {
-                      const itemContainer = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
-                      const quantityInput = itemContainer.querySelector('.quantity-input');
-                      const priceElement = itemContainer.querySelector('.current-price');
-          
-                      quantityInput.value = data.quantity;
-          
-                      // Update product total price
-                      priceElement.textContent = `KSh ${data.item_total}`;
-          
-                      // Update subtotal and checkout button
-                      document.querySelector('.subtotal span:last-child').textContent = `KSh ${data.cart_subtotal}`;
-                      document.querySelector('.checkout-btn').textContent = `Checkout (KSh ${data.cart_subtotal})`;
-                  }
-              })
-              .catch(error => console.error('Error:', error));
-          }
+
+        function updateQuantity(itemId, action, value = null) {
+            let formData = new FormData();
+            formData.append('item_id', itemId);
+            formData.append('action', action);
+            if (value !== null) {
+                formData.append('value', value);
+            }
+
+            fetch('{% url "update_cart_item" %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `item_id=${itemId}&action=${action}${value !== null ? `&value=${value}` : ''}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Find the input within the cart item
+                    const input = document.querySelector(`.quantity-input[data-id="${itemId}"]`);
+                    input.value = data.quantity;
+
+                    // Update price
+                    const cartItem = input.closest('.cart-item');
+                    const priceElement = cartItem.querySelector('.price');
+                    priceElement.textContent = `KSh ${data.item_total}`;
+
+                    // Update total
+                    const totalAmount = document.querySelector('.total-amount');
+                    totalAmount.textContent = `KSh ${data.cart_subtotal}`;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
           
     
         function removeItem(itemId) {
