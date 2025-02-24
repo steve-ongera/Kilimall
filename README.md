@@ -1,6 +1,6 @@
 # Kilimall E-commerce Clone
 
-![Homepage](https://github.com/steve-ongera/Zindua/blob/main/screenshots/screenshot_homepgae.png)
+![Homepage](https://github.com/steve-ongera/Kilimall/blob/main/screenshot/screenshot.png)
 
 ## Overview
 
