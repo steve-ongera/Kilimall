@@ -1,139 +1,405 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Home | Your E-commerce Site{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="home-container">
-    <!-- Category Sidebar -->
-    <div class="category-sidebar">
-        <ul>
-            <li><i class="fas fa-star"></i> Kili Featured</li>
-            <li><i class="fas fa-tv"></i> TV/Audio/Video</li>
-            <li><i class="fas fa-shoe-prints"></i> Shoes</li>
-            <li><i class="fas fa-mobile-alt"></i> Phones & Accessories</li>
-            <li><i class="fas fa-home"></i> Home & Kitchen</li>
-            <li><i class="fas fa-heart"></i> Health & Beauty</li>
-            <li><i class="fas fa-blender"></i> Appliances</li>
-            <li><i class="fas fa-lightbulb"></i> Light</li>
-            <li><i class="fas fa-tshirt"></i> Clothes</li>
-            <li><i class="far fa-clock"></i> Watches & Jewellery</li>
-            <li><i class="fas fa-laptop"></i> Computers & Accessories</li>
-            <li><i class="fas fa-baby"></i> Kids & Baby Products</li>
-            <li><i class="fas fa-car"></i> Automotive</li>
+<!-- Top Categories Navigation -->
+<div class="top-categories">
+    <div class="container">
+        <div class="categories-wrapper">
+            <a href="#" class="category-item active">Xphones</a>
+            <a href="#" class="category-item">Wardrobe</a>
+            <a href="#" class="category-item">earphone</a>
+            <a href="#" class="category-item">Water Dispenser</a>
+            <a href="#" class="category-item">Tech Week</a>
+            <a href="#" class="category-item">Earphone</a>
+            <a href="#" class="category-item">Backpacks</a>
+            <a href="#" class="category-item">refurbished phone</a>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container main-container">
+    <!-- Left Sidebar - Categories -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <span>Category</span>
+            <i class="fas fa-angle-down"></i>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#"><i class="fas fa-fire"></i> All Featured</a></li>
+            <li><a href="#"><i class="fas fa-tv"></i> TV/Audio&Video</a></li>
+            <li><a href="#"><i class="fas fa-shoe-prints"></i> Shoes</a></li>
+            <li><a href="#"><i class="fas fa-mobile-alt"></i> Phones & Accessories</a></li>
+            <li><a href="#"><i class="fas fa-home"></i> Home & Kitchen</a></li>
+            <li><a href="#"><i class="fas fa-heartbeat"></i> Health & Beauty</a></li>
+            <li><a href="#"><i class="fas fa-blender"></i> Appliances</a></li>
+            <li><a href="#"><i class="fas fa-suitcase"></i> Bags</a></li>
+            <li><a href="#"><i class="fas fa-tshirt"></i> Clothes</a></li>
+            <li><a href="#"><i class="fas fa-clock"></i> Watches & Jewellery</a></li>
+            <li><a href="#"><i class="fas fa-laptop"></i> Computers & Accessories</a></li>
+            <li><a href="#"><i class="fas fa-baby"></i> Kids & Baby Products</a></li>
+            <li><a href="#"><i class="fas fa-car"></i> Automotive</a></li>
         </ul>
     </div>
 
-    <!-- Main Content Area -->
-    <div class="main-content">
-        <!-- Hero Banner -->
-        <div class="hero-banner">
-            <div class="banner-content">
-                <div class="banner-text">
-                    <h2>Shoes Outlets Sale</h2>
-                    <p>Feb. 17-Mar. 2</p>
-                    <p class="price">Down to KSh299!</p>
+    <!-- Right Content Area -->
+    <div class="content-area">
+        <!-- Main Tabs -->
+        <div class="main-tabs">
+            <a href="#" class="tab active">What's New</a>
+            <a href="#" class="tab">Flash Sale</a>
+        </div>
+
+        <!-- Main Banner Carousel -->
+        <div class="main-banner">
+            <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="banner-content">
+                            <div class="banner-header">
+                                <span class="banner-dates">+ Feb. 17-Mar. 2 +</span>
+                                <h2 class="banner-title">Phone&Accs<br>Outlets Sale 💥</h2>
+                                <a href="#" class="banner-btn">Down to KSh99!</a>
+                            </div>
+                            <div class="banner-products">
+                                <div class="banner-product">
+                                    <img src="{% static 'images/itel-s24.jpg' %}" alt="itel S24">
+                                    <div class="product-price">
+                                        <span class="current-price">Ksh 11,599</span>
+                                        <span class="old-price">Ksh 14,999</span>
+                                    </div>
+                                    <div class="product-name">Itel S24 128GB+8(4+4)GB</div>
+                                </div>
+                                <div class="banner-product">
+                                    <img src="{% static 'images/tws-earphones.jpg' %}" alt="TWS Earphones">
+                                    <div class="product-price">
+                                        <span class="current-price">Ksh 1,199</span>
+                                        <span class="old-price">Ksh 2,999</span>
+                                    </div>
+                                    <div class="product-name">TWS8 BT Wireless Earphones</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more carousel items as needed -->
                 </div>
-                <img src="{% static 'images/shoes-banner.jpg' %}" alt="Shoes Sale">
+                <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
 
-        <!-- Quick Categories -->
-        <div class="quick-categories">
-            <div class="category-card">
-                <h3>SHOES SALES</h3>
-                <p>KSh 1,099</p>
-                <img src="{% static 'images/shoes-card.jpg' %}" alt="Shoes">
+        <!-- Category Tiles -->
+        <div class="category-tiles">
+            <div class="category-tile health-beauty">
+                <div class="tile-header">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>HEALTH & BEAUTY SALE</span>
+                </div>
+                <div class="tile-content">
+                    <div class="tile-desc">3 in 1 Hair Dryer Hot and Cold Wind Hair Dryer</div>
+                    <div class="tile-price">
+                        <span class="current-price">KSh 1,509</span>
+                        <span class="old-price">KSh 2,999</span>
+                    </div>
+                    <img src="{% static 'images/hair-dryer.jpg' %}" alt="Hair Dryer">
+                </div>
             </div>
-            <div class="category-card">
-                <h3>HOME & LIVING</h3>
-                <p>KSh 2,249</p>
-                <img src="{% static 'images/home-card.jpg' %}" alt="Home">
+            <div class="category-tile phones-sale">
+                <div class="tile-header">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>PHONES SALE</span>
+                </div>
+                <div class="tile-content">
+                    <div class="tile-desc">itel S24 128GB+8(4+4)GB</div>
+                    <div class="tile-price">
+                        <span class="current-price">KSh 11,599</span>
+                        <span class="old-price">KSh 13,999</span>
+                    </div>
+                    <img src="{% static 'images/itel-s24-tile.jpg' %}" alt="itel S24">
+                </div>
             </div>
-            <div class="category-card">
-                <h3>TV & Audio</h3>
-                <p>KSh 4,795</p>
-                <img src="{% static 'images/tv-card.jpg' %}" alt="TV">
+            <div class="category-tile tv-audio">
+                <div class="tile-header">
+                    <i class="fas fa-tv"></i>
+                    <span>TV & AUDIO</span>
+                </div>
+                <div class="tile-content">
+                    <div class="tile-desc">Vitron 43" Frameless Android TV</div>
+                    <div class="tile-price">
+                        <span class="current-price">KSh 13,995</span>
+                        <span class="old-price">KSh 20,999</span>
+                    </div>
+                    <img src="{% static 'images/vitron-tv.jpg' %}" alt="Vitron TV">
+                </div>
             </div>
-            <div class="category-card">
-                <h3>LAPTOPS SALES</h3>
-                <p>KSh 16,499</p>
-                <img src="{% static 'images/laptop-card.jpg' %}" alt="Laptop">
+            <div class="category-tile appliances">
+                <div class="tile-header">
+                    <i class="fas fa-blender"></i>
+                    <span>APPLIANCES</span>
+                </div>
+                <div class="tile-content">
+                    <div class="tile-desc">Mika Mini Fridge Freezer</div>
+                    <div class="tile-price">
+                        <span class="current-price">KSh 19,995</span>
+                        <span class="old-price">KSh 25,999</span>
+                    </div>
+                    <img src="{% static 'images/mini-fridge.jpg' %}" alt="Mini Fridge">
+                </div>
             </div>
         </div>
 
         <!-- Flash Sale Section -->
-        <div class="section-header">
-            <div class="title">
-                <i class="fas fa-bolt"></i> Flash Sale
-                <span class="timer">Ends in 21 22 45</span>
+        <div class="section flash-sale">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    <span>Flash Sale</span>
+                    <span class="ends-in">Ends in</span>
+                    <div class="countdown">
+                        <span class="countdown-box">00</span>
+                        <span class="countdown-box">00</span>
+                        <span class="countdown-box">00</span>
+                    </div>
+                </div>
+                <a href="#" class="view-more">View more</a>
             </div>
-            <a href="#" class="view-more">View more</a>
-        </div>
-        <div class="product-grid">
-            <!-- Flash Sale Products -->
-            {% for product in flash_sale_products %}
-            <div class="product-card">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                <div class="product-info">
-                    <h4>{{ product.name }}</h4>
-                    <p class="price">KSh {{ product.price }}</p>
+            <div class="product-row">
+                <div class="product-card">
+                    <img src="{% static 'images/watch.jpg' %}" alt="Men's Watch">
+                    <div class="product-desc">Fashion Mens Sports Watches Luxury Men Stainless Steel Watch</div>
+                    <div class="product-price">KSh 99</div>
+                </div>
+                <div class="product-card">
+                    <img src="{% static 'images/writing-tablet.jpg' %}" alt="Writing Tablet">
+                    <div class="product-desc">10inch LCD Writing Tablet Kids Erasable Colorful Drawing Board</div>
+                    <div class="product-price">KSh 299</div>
+                </div>
+                <div class="product-card">
+                    <img src="{% static 'images/body-oil.jpg' %}" alt="Body Oil">
+                    <div class="product-desc">[Limited Offer] Nice & Lovely Flawless Bio-Body Oil For Women</div>
+                    <div class="product-price">KSh 427</div>
+                </div>
+                <div class="product-card">
+                    <img src="{% static 'images/panties.jpg' %}" alt="Women's Panties">
+                    <div class="product-desc">5PC colors random women's seamless ice silk panties</div>
+                    <div class="product-price">KSh 399</div>
+                </div>
+                <div class="product-card">
+                    <img src="{% static 'images/glasses.jpg' %}" alt="Blue Glasses">
+                    <div class="product-desc">Ultralight Anti Blue Glasses Retro Green Frame Glasses</div>
+                    <div class="product-price">KSh 259</div>
                 </div>
             </div>
-            {% endfor %}
         </div>
 
         <!-- Hot Category Section -->
-        <h2 class="section-title">Hot Category</h2>
-        <div class="hot-categories">
+        <div class="section hot-category">
+            <div class="section-header">
+                <div class="section-title">Hot Category</div>
+            </div>
             <div class="category-grid">
-                <!-- Top Row -->
-                <div class="category-item">
-                    <img src="{% static 'images/category/tvs.jpg' %}" alt="TVs">
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-tv.jpg' %}" alt="TVs">
                     <span>TVs</span>
-                </div>
-                <!-- Add more category items -->
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-appliances.jpg' %}" alt="Appliances">
+                    <span>Appliances</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-kitchen.jpg' %}" alt="Kitchen">
+                    <span>Kitchen</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-home.jpg' %}" alt="Home">
+                    <span>Home</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-phones.jpg' %}" alt="Phones">
+                    <span>Phones</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-refurbished.jpg' %}" alt="Refurbished Phones">
+                    <span>Refurbished Phones</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-smartwatches.jpg' %}" alt="Smartwatches">
+                    <span>Smartwatches</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-personal-care.jpg' %}" alt="Personal Care">
+                    <span>Personal Care</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-beauty.jpg' %}" alt="Beauty">
+                    <span>Beauty</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-health.jpg' %}" alt="Health Care">
+                    <span>Health Care</span>
+                </a>
+                <!-- Second row -->
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-wigs.jpg' %}" alt="Wigs and Tools">
+                    <span>Wigs and Tools</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-men-shoes.jpg' %}" alt="Men Shoes">
+                    <span>Men Shoes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-women-shoes.jpg' %}" alt="Women Shoes">
+                    <span>Women Shoes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-kids-shoes.jpg' %}" alt="Kids Shoes">
+                    <span>Kids Shoes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-women-acc.jpg' %}" alt="Women Accessories">
+                    <span>Women Accessories</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-men-acc.jpg' %}" alt="Men Accessories">
+                    <span>Men Accessories</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-women-clothes.jpg' %}" alt="Women Clothes">
+                    <span>Women Clothes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-men-clothes.jpg' %}" alt="Men Clothes">
+                    <span>Men Clothes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-women-bags.jpg' %}" alt="Women Bags">
+                    <span>Women Bags</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-men-bags.jpg' %}" alt="Men Bags">
+                    <span>Men Bags</span>
+                </a>
             </div>
         </div>
 
         <!-- What's New Section -->
-        <div class="section-header">
-            <h2>What's New</h2>
-            <a href="#" class="view-more">View More</a>
-        </div>
-        <div class="product-grid">
-            <!-- New Products -->
-            {% for product in new_products %}
-            <div class="product-card">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                <div class="product-info">
-                    <h4>{{ product.name }}</h4>
-                    <p class="price">KSh {{ product.price }}</p>
+        <div class="section whats-new">
+            <div class="section-header">
+                <div class="section-title">What's New</div>
+                <a href="#" class="view-more">View More</a>
+            </div>
+            <div class="product-row">
+                <div class="product-price-card">
+                    <div class="price">KSh 1,299</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 699</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 1,499</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 7,999</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 18,399</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 5,299</div>
                 </div>
             </div>
-            {% endfor %}
         </div>
 
         <!-- You May Also Like Section -->
-        <div class="section-header">
-            <h2>You May Also Like</h2>
-        </div>
-        <div class="product-grid">
-            <!-- Recommended Products -->
-            {% for product in recommended_products %}
-            <div class="product-card">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                <div class="product-info">
-                    <h4>{{ product.name }}</h4>
-                    <p class="price">KSh {{ product.price }}</p>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="reviews">({{ product.review_count }})</span>
-                    </div>
+        <div class="section you-may-like">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span>You May Also Like</span>
                 </div>
             </div>
-            {% endfor %}
+            <div class="product-grid">
+                <!-- Row 1 -->
+                <div class="product-card">
+                    <div class="product-badge hot">HOT</div>
+                    <img src="{% static 'images/old-tv.jpg' %}" alt="OLD 43 Inch Full HD Smart TV">
+                    <div class="product-desc">OLD 43 Inch Full HD Smart TV Android LED TV</div>
+                    <div class="product-price">KSh 19,599</div>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(192)</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge limited">LIMITED</div>
+                    <img src="{% static 'images/lenovo-laptop.jpg' %}" alt="Lenovo YOGA 11E">
+                    <div class="product-desc">[NEW SPECIAL OFFER!] LENOVO YOGA 11E 4 Gen.</div>
+                    <div class="product-price">KSh 10,999</div>
+                    <div class="product-rating">
+                        <div class="stars">★★★★☆</div>
+                        <span class="rating-count">(163)</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge new">NEW</div>
+                    <img src="{% static 'images/tv-stand.jpg' %}" alt="Modern Wooden TV Stand">
+                    <div class="product-desc">Meedo Modern Wooden TV Stand For Up To 30" TVs</div>
+                    <div class="product-price">KSh 4,499</div>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(28)</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge new-year">NEW YEAR</div>
+                    <img src="{% static 'images/iphone-13.jpg' %}" alt="iPhone 13">
+                    <div class="product-desc">[New Year Promotion] Apple Iphone 13 128GB +</div>
+                    <div class="product-price">KSh 72,999</div>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(22)</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="{% static 'images/watch-bracelet.jpg' %}" alt="Men Watch + Bracelet">
+                    <div class="product-desc">2PCS Men Fashion Classic Men's Watches + Bracelet</div>
+                    <div class="product-price">KSh 569</div>
+                    <div class="product-rating">
+                        <div class="stars">★★★★☆</div>
+                        <span class="rating-count">(273)</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge walmart">WALMART</div>
+                    <img src="{% static 'images/blender.jpg' %}" alt="Vitamix Blender">
+                    <div class="product-desc">Vitamart 6 Blades VIOS-560 Fine Standalone Blender</div>
+                    <div class="product-price">KSh 18,499</div>
+                    <div class="product-rating">
+                        <div class="stars">★★★★☆</div>
+                        <span class="rating-count">(142)</span>
+                    </div>
+                </div>
+                
+                <!-- More product rows can be added as needed -->
+            </div>
         </div>
-
-        <button class="show-more">SHOW MORE</button>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

@@ -1,27 +1,456 @@
- {% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | Kilimall{% endblock %}
 
 {% block content %}
-<!-- Sponsored Products Section -->
-<section class="sponsored-products">
-    <h2>Sponsored products</h2>
-    <div class="products-grid">
-        {% for product in sponsored_products %}
-        <div class="product-card">
-            <div class="discount-tag">-{{ product.discount_percentage}}%</div>
-            <a href="{% url 'product_detail' product.slug %}">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                <div class="product-info">
-                    <h3>{{ product.name }}</h3>
-                    <div class="price">
-                        <span class="current-price">ksh {{ product.price }}</span>
-                        <span class="original-price">ksh {{ product.original_price }}</span>
+
+<style>
+    /* Main container for all category tiles */
+    .category-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+    margin: 10px 0;
+    }
+
+    /* Individual category tile */
+    .category-tile {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    }
+
+    .category-tile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Tile header styling */
+    .tile-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eaeaea;
+    padding: 12px 15px;
+    }
+
+    .header-content {
+    display: flex;
+    align-items: center;
+    }
+
+    .header-content i {
+    font-size: 18px;
+    color: #3a3a3a;
+    margin-right: 10px;
+    }
+
+    .header-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    }
+
+    .category-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    text-transform: capitalize;
+    }
+
+    .sale-tag {
+    background-color: #ff4757;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    }
+
+    /* Tile content */
+    .tile-content {
+    padding: 15px;
+    position: relative;
+    }
+
+    .product-info {
+    margin-bottom: 15px;
+    }
+
+    .tile-desc {
+    font-size: 15px;
+    font-weight: 500;
+    color: #4a4a4a;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    }
+
+    .discount-label {
+    display: inline-block;
+    background-color: #ffeaa7;
+    color: #d35400;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    }
+
+    /* Product image container */
+    .product-image {
+    text-align: center;
+    margin: 15px 0;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .product-image img {
+    max-width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    }
+
+    /* Price styling */
+    .price-tag {
+    display: inline-block;
+    margin-bottom: 5px;
+    }
+
+    .current-price {
+    font-weight: 700;
+    font-size: 18px;
+    color: #2e2e2e;
+    }
+
+    .original-price {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 14px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+    .category-tiles {
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 15px;
+    }
+
+    .product-image {
+    height: 150px;
+    }
+    }
+
+</style>
+
+
+
+
+
+<script src="{% static 'js/home.js' %}"></script>
+
+<br>
+
+<!-- Main Content -->
+<div class="container main-container">
+    {% comment %}
+    <!-- Left Sidebar - Categories -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <span>Category</span>
+            <i class="fas fa-angle-down"></i>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#"><i class="fas fa-fire"></i> All Featured</a></li>
+            <li><a href="#"><i class="fas fa-tv"></i> TV/Audio&Video</a></li>
+            <li><a href="#"><i class="fas fa-shoe-prints"></i> Shoes</a></li>
+            <li><a href="#"><i class="fas fa-mobile-alt"></i> Phones & Accessories</a></li>
+            <li><a href="#"><i class="fas fa-home"></i> Home & Kitchen</a></li>
+            <li><a href="#"><i class="fas fa-heartbeat"></i> Health & Beauty</a></li>
+            <li><a href="#"><i class="fas fa-blender"></i> Appliances</a></li>
+            <li><a href="#"><i class="fas fa-suitcase"></i> Bags</a></li>
+            <li><a href="#"><i class="fas fa-tshirt"></i> Clothes</a></li>
+            <li><a href="#"><i class="fas fa-clock"></i> Watches & Jewellery</a></li>
+            <li><a href="#"><i class="fas fa-laptop"></i> Computers & Accessories</a></li>
+            <li><a href="#"><i class="fas fa-baby"></i> Kids & Baby Products</a></li>
+            <li><a href="#"><i class="fas fa-car"></i> Automotive</a></li>
+        </ul>
+    </div>
+    {% endcomment %}
+
+    <!-- Right Content Area -->
+    <div class="content-area">
+        <!-- Main Tabs -->
+        <div class="main-tabs">
+            <a href="#" class="tab active">What's New</a>
+            <a href="#" class="tab">Flash Sale</a>
+        </div>
+
+        <!-- Main Banner Carousel -->
+        <div class="main-banner">
+            <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="banner-content">
+                            <div class="banner-header">
+                                <span class="banner-dates">+ Feb. 17-Mar. 2 +</span>
+                                <h2 class="banner-title">Phone&Accs<br>Outlets Sale 💥</h2>
+                                <a href="#" class="banner-btn">Down to KSh99!</a>
+                            </div>
+                            <div class="banner-products">
+                                <div class="banner-product">
+                                    <img src="{% static 'img/banner-1.webp' %}" alt="itel S24">
+                                    <div class="product-price">
+                                        <span class="current-price">Ksh 11,599</span>
+                                        <span class="old-price">Ksh 14,999</span>
+                                    </div>
+                                    <div class="product-name">Itel S24 128GB+8(4+4)GB</div>
+                                </div>
+                                <div class="banner-product">
+                                    <img src="{% static 'img/banner-2.webp' %}" alt="TWS Earphones">
+                                    <div class="product-price">
+                                        <span class="current-price">Ksh 1,199</span>
+                                        <span class="old-price">Ksh 2,999</span>
+                                    </div>
+                                    <div class="product-name">TWS8 BT Wireless Earphones</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more carousel items as needed -->
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Category Tiles -->
+        
+        <div class="category-tiles">
+            {% for pair in category_product_pairs %}
+                <div class="category-tile">
+                    <div class="tile-header">
+                        <div class="header-content">
+                            <i class="fas fa-{{ pair.category.name|lower }}"></i>
+                            <div class="header-text">
+                                <span class="category-name">{{ pair.category.name }}</span>
+                                <span class="sale-tag"> SALE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tile-content">
+                        <div class="product-info">
+                            <div class="tile-desc">{{ pair.product.name }}</div>
+                            {% if pair.product.discount_percentage %}
+                                <div class="discount-label">{{ pair.product.discount_percentage }}% Off Limited Offer</div>
+                            {% endif %}
+                        </div>
+                        <div class="product-image">
+                            <img src="{{ pair.product.image.url }}" alt="{{ pair.product.name }}">
+                        </div>
+                        <div class="price-tag">
+                            <span class="current-price">KSh {{ pair.product.price }}</span>
+                        </div>
+                        {% if pair.product.original_price %}
+                            <div class="original-price">KSh {{ pair.product.original_price }}</div>
+                        {% endif %}
                     </div>
                 </div>
-            </a>    
+            {% endfor %}
         </div>
-        {% endfor %}
-        
-    </div>
-</section>
 
+
+
+
+        <!-- Flash Sale Section -->
+        <div class="section flash-sale">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    <span>Flash Sale</span>
+                    <span class="ends-in">Ends in</span>
+                    <div class="countdown">
+                        <span class="countdown-box">00</span>
+                        <span class="countdown-box">00</span>
+                        <span class="countdown-box">00</span>
+                    </div>
+                </div>
+                <a href="/products/" class="view-more">View more</a>
+            </div>
+            <div class="product-row">
+                {% for product in top_sold_products %}
+                <div class="product-card">
+                    <a href="{% url 'product_detail' product.slug %}"> 
+                        <img src="{{ product.image.url }}">
+                    </a>    
+                    <div class="product-desc">{{ product.name }}</div>
+                    <div class="product-price">KSh {{ product.price }}</div>
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+
+        <!-- Hot Category Section -->
+        <div class="section hot-category">
+            <div class="section-header">
+                <div class="section-title">Hot Category</div>
+            </div>
+            <div class="category-grid">
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-tv.jpg' %}" alt="TVs">
+                    <span>TVs</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-appliances.jpg' %}" alt="Appliances">
+                    <span>Appliances</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-kitchen.jpg' %}" alt="Kitchen">
+                    <span>Kitchen</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-home.jpg' %}" alt="Home">
+                    <span>Home</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-phones.jpg' %}" alt="Phones">
+                    <span>Phones</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-refurbished.jpg' %}" alt="Refurbished Phones">
+                    <span>Refurbished Phones</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-smartwatches.jpg' %}" alt="Smartwatches">
+                    <span>Smartwatches</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-personal-care.jpg' %}" alt="Personal Care">
+                    <span>Personal Care</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-beauty.jpg' %}" alt="Beauty">
+                    <span>Beauty</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-health.jpg' %}" alt="Health Care">
+                    <span>Health Care</span>
+                </a>
+                <!-- Second row -->
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-wigs.jpg' %}" alt="Wigs and Tools">
+                    <span>Wigs and Tools</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-men-shoes.jpg' %}" alt="Men Shoes">
+                    <span>Men Shoes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-women-shoes.jpg' %}" alt="Women Shoes">
+                    <span>Women Shoes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-kids-shoes.jpg' %}" alt="Kids Shoes">
+                    <span>Kids Shoes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-women-acc.jpg' %}" alt="Women Accessories">
+                    <span>Women Accessories</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-men-acc.jpg' %}" alt="Men Accessories">
+                    <span>Men Accessories</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-women-clothes.jpg' %}" alt="Women Clothes">
+                    <span>Women Clothes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-men-clothes.jpg' %}" alt="Men Clothes">
+                    <span>Men Clothes</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-women-bags.jpg' %}" alt="Women Bags">
+                    <span>Women Bags</span>
+                </a>
+                <a href="#" class="category-item">
+                    <img src="{% static 'images/cat-men-bags.jpg' %}" alt="Men Bags">
+                    <span>Men Bags</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- What's New Section -->
+        <div class="section whats-new">
+            <div class="section-header">
+                <div class="section-title">What's New</div>
+                <a href="#" class="view-more">View More</a>
+            </div>
+            <div class="product-row">
+                <div class="product-price-card">
+                    <div class="price">KSh 1,299</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 699</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 1,499</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 7,999</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 18,399</div>
+                </div>
+                <div class="product-price-card">
+                    <div class="price">KSh 5,299</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- You May Also Like Section -->
+        <div class="section you-may-like">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span>You May Also Like</span>
+                </div>
+            </div>
+            <div class="product-grid">
+                <!-- Row 1 -->
+                {% for product in daily_finds %}
+                <div class="product-card">
+                    <div class="product-badge hot">HOT</div>
+                    <a href="{% url 'product_detail' product.slug %}" >
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </a>
+                    <div class="product-desc">{{ product.name }}</div>
+                    <div class="product-price">KSh {{ product.price }}</div>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">({{product.total_reviews}})</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- More product rows can be added as needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

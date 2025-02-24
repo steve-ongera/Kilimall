@@ -69,7 +69,36 @@ def home_view(request):
 
     # Fetch a random set of products (e.g., 6 products for Daily Finds)
     all_products = list(Product.objects.all())  # Convert QuerySet to list
-    daily_finds = random.sample(all_products, min(len(all_products), 6))  # Get up to 6 random products
+    daily_finds = random.sample(all_products, min(len(all_products), 15))  # Get up to 6 random products
+
+    #new views 
+    # Get all categories that have at least one product
+    categories_with_products = []
+    
+    for category in Category.objects.all():
+        products = list(category.products.all())
+        if products:  # Only add categories that have products
+            categories_with_products.append({
+                'category': category,
+                'products': products
+            })
+    
+    # If we have fewer than 4 categories with products, use all of them
+    # Otherwise, randomly select 4
+    if len(categories_with_products) <= 4:
+        selected_category_data = categories_with_products
+    else:
+        selected_category_data = random.sample(categories_with_products, 4)
+    
+    # Create the final data structure with one random product per category
+    category_product_pairs = []
+    for item in selected_category_data:
+        category = item['category']
+        random_product = random.choice(item['products'])
+        category_product_pairs.append({
+            'category': category,
+            'product': random_product
+        })
 
 
     context = {
@@ -79,6 +108,7 @@ def home_view(request):
         'top_sold_products': top_sold_products,
         'top_selling_products': top_selling_products,
         'daily_finds': daily_finds,
+        'category_product_pairs': category_product_pairs
     }
     return render(request, 'home.html', context)
 

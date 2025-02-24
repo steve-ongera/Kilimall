@@ -1,0 +1,27 @@
+ {% extends "base.html" %}
+
+{% block content %}
+<!-- Sponsored Products Section -->
+<section class="sponsored-products">
+    <h2>Sponsored products</h2>
+    <div class="products-grid">
+        {% for product in sponsored_products %}
+        <div class="product-card">
+            <div class="discount-tag">-{{ product.discount_percentage}}%</div>
+            <a href="{% url 'product_detail' product.slug %}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <div class="price">
+                        <span class="current-price">ksh {{ product.price }}</span>
+                        <span class="original-price">ksh {{ product.original_price }}</span>
+                    </div>
+                </div>
+            </a>    
+        </div>
+        {% endfor %}
+        
+    </div>
+</section>
+
+{% endblock %}
