@@ -58,7 +58,7 @@ def custom_logout(request):
     return redirect('login')  # Redirect to login page after logout
 
 
-@login_required
+
 def home_view(request):
 
     sponsored_products = Product.objects.filter(is_sponsored=True)[:10]  # Example, modify as needed
@@ -90,7 +90,7 @@ def product_list_view(request):
 
     return render(request, 'e-commerce/product_list.html', {'page_obj': page_obj})
 
-@login_required
+
 def product_detail_view(request, slug):
     product = get_object_or_404(Product, slug=slug)
     seller = product.seller  # Assuming Product has a ForeignKey to Seller

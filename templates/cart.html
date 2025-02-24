@@ -5,7 +5,7 @@
 <div class="cart-container">
     <div class="cart-items">
         {% for item in cart_items %}
-        <div class="cart-item">
+        <div class="cart-item" data-item-id="{{ item.id }}" >
          
             <div class="store-info">
                 <i class="fas fa-store"></i>
@@ -30,6 +30,7 @@
                 <div class="item-price">
                     <span class="price">KSh {{ item.product.price }}</span>
                     <form action="{% url 'remove_from_cart' item.id %}" method="POST" class="remove-item-form">
+                        {% csrf_token %}
                         <button  type="submit" class="delete-btn" >Delete</button>
                      </form>
                 </div>
@@ -61,6 +62,7 @@
         </div>
     </div>
 </div>
+
 
 
 <script>
@@ -170,6 +172,6 @@
     });
     </script>
   
-
+  
 {% endblock %}
 
